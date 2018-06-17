@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block group_filter %}
+    {% for group in groups %}
+        <div style="width: 100%; display: block">
+            <a {% if active == group %} style="font-weight: bold;" {% endif %} href="{% url 'minerals:group_filter' group=group %}">{{ group }}</a>
+        </div>
+        {% endfor %}
+{% endblock %}
+
+{% block color_filter %}
+    {% for color in colors %}
+        <div style="width: 100%; display: block">
+            <a {% if active == color %} style="font-weight: bold;" {% endif %} href="{% url 'minerals:color_filter' color=color %}">{{ color }}</a>
+        </div>
+        {% endfor %}
+{% endblock %}
+
+{% block letter_filter %}
+    <p class="text-centered">
+        {% for letter in letters %}
+            <a {% if active == letter %} style="font-weight: bold;" {% endif %} href="{% url 'minerals:letter_filter' letter=letter %}">{{ letter }}</a>
+        {% endfor %}
+    </p>
+{% endblock %}
+
+{% block content %}
+    <div class="grid-100">
+      <ul class="minerals__container">
+          {% for mineral in minerals %}
+            <li class="minerals__item">
+                <a class="minerals__anchor" href="{% url 'minerals:detail' pk=mineral.pk %}">{{ mineral.name|truncatewords:1 }}</a>
+            </li>
+          {% endfor %}
+      </ul>
+    </div>
+{% endblock %}
+
+{% block rand_mineral %}
+    <div class="minerals__random">
+        <a class="minerals__anchor" href="{% url 'minerals:detail' pk=rand_pk %}">Show random mineral</a>
+    </div>
+{% endblock %}
