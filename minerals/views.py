@@ -18,7 +18,6 @@ colors = ['White', 'Grey', 'Brown', 'Red', 'Orange', 'Yellow', 'Green',
           'Blue', 'Violet', 'Pink', 'Black', 'Transparent', 'Colorless']
 
 
-
 def rand_mineral():
     rand_pk = randint(1, Mineral.objects.all().count())
     return rand_pk
@@ -81,7 +80,8 @@ def mineral_list_color_filter(request, color):
 
 def mineral_search(request):
     term = request.GET.get('q')
-    fields = [field+'__icontains' for field in Mineral._meta.get_all_field_names()]
+    fields = [field+'__icontains'
+              for field in Mineral._meta.get_all_field_names()]
     minerals = []
     for field in fields:
         minerals.extend(Mineral.objects.filter(**{field: term}))

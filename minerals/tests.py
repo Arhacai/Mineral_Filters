@@ -5,7 +5,6 @@ from minerals.views import rand_mineral
 from .models import Mineral
 
 
-
 class MineralModelTest(TestCase):
     def test_mineral_creation(self):
         mineral = Mineral.objects.create(
@@ -52,29 +51,32 @@ class MineralViewsTest(TestCase):
         self.assertContains(resp, self.mineral.name)
 
     def test_mineral_list_letter_filter_view(self):
-        resp = self.client.get(reverse('minerals:letter_filter', kwargs={'letter': 'A'}))
+        resp = self.client.get(reverse('minerals:letter_filter',
+                                       kwargs={'letter': 'A'}))
         self.assertEqual(resp.status_code, 200)
         self.assertIn(self.mineral, resp.context['minerals'])
         self.assertTemplateUsed(resp, 'minerals/index.html')
         self.assertContains(resp, self.mineral.name)
 
     def test_mineral_list_group_filter_view(self):
-        resp = self.client.get(reverse('minerals:group_filter', kwargs={'group': 'Sulfides'}))
+        resp = self.client.get(reverse('minerals:group_filter',
+                                       kwargs={'group': 'Sulfides'}))
         self.assertEqual(resp.status_code, 200)
         self.assertIn(self.mineral, resp.context['minerals'])
         self.assertTemplateUsed(resp, 'minerals/index.html')
         self.assertContains(resp, self.mineral.name)
 
     def test_mineral_list_color_filter_view(self):
-        resp = self.client.get(reverse('minerals:color_filter', kwargs={'color': 'White'}))
+        resp = self.client.get(reverse('minerals:color_filter',
+                                       kwargs={'color': 'White'}))
         self.assertEqual(resp.status_code, 200)
         self.assertIn(self.mineral, resp.context['minerals'])
         self.assertTemplateUsed(resp, 'minerals/index.html')
         self.assertContains(resp, self.mineral.name)
 
     def test_mineral_list_other_color_filter_view(self):
-        resp = self.client.get(reverse('minerals:color_filter', kwargs={'color': 'Other'}))
+        resp = self.client.get(reverse('minerals:color_filter',
+                                       kwargs={'color': 'Other'}))
         self.assertEqual(resp.status_code, 200)
         self.assertNotIn(self.mineral, resp.context['minerals'])
         self.assertTemplateUsed(resp, 'minerals/index.html')
-
